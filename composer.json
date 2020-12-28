@@ -1,0 +1,30 @@
+{
+    "name": "zareismail/strandprofile",
+    "description": "A Laravel Nova tool.",
+    "keywords": [
+        "laravel",
+        "nova"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1.0",
+        "zareismail/hafiz": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zareismail\\Strandprofile\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Zareismail\\Strandprofile\\StrandprofileServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
