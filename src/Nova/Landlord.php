@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest; 
 use Laravel\Nova\Fields\HasMany; 
 use Zareismail\Chapar\Nova\Letter;
+use Zareismail\Hafiz\Nova\Registration;
 use Zareismail\Hafiz\Helper;
 
 class Landlord extends User

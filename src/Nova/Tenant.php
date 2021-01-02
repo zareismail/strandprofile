@@ -3,6 +3,7 @@
 namespace Zareismail\Strandprofile\Nova; 
 
 use Laravel\Nova\Http\Requests\NovaRequest; 
+use Zareismail\Hafiz\Nova\Registration;
 use Zareismail\Hafiz\Helper;
 
 class Tenant extends User
