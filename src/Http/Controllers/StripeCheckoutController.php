@@ -17,13 +17,13 @@ class StripeCheckoutController extends Controller
         $this->setStripeKey($request);
 
         $session = Session::create([
-            'customer_email' => $request->user()->email,
+            'customer_email' => $request->user()->email, 
             'payment_method_types' => ['card'],
             'line_items' => [[ 
                 'quantity' => $request->get('quantity', 1),
                 'price_data' => [
                     'currency' => $request->currency ?? 'USD',
-                    'unit_amount' => intval($request->amount),
+                    'unit_amount_decimal' => $request->amount,
                     'product_data' => [
                       'name' => $resource->title() ?? ($resource::label() .' #'. $resource->getKey()), 
                     ],
@@ -31,7 +31,7 @@ class StripeCheckoutController extends Controller
             ]],
             'mode' => 'payment',
             'client_reference_id' => $resource->getKey(),
-            'success_url' => url(Nova::path()),
+            'success_url' => url(Nova::path().'/resources/maturities/'. $request->resourceId),
             'cancel_url' => url(Nova::path()),
         ]);
 

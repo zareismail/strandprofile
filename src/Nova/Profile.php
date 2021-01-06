@@ -18,6 +18,13 @@ class Profile extends User
     public static $displayInNavigation = false;
 
     /**
+     * The relationships that should be eager loaded when performing an index query.
+     *
+     * @var array
+     */
+    public static $with = ['maturiteis'];
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -40,15 +47,33 @@ class Profile extends User
                 ->rounded()
                 ->hideFromDetail(boolval($request->get('card') == 'profile')),
 
-            StripeCheckout::make(__('Make Payment'))
-                ->endpoint(route('stripe.checkout', Maturity::uriKey()))
-                ->key(Stripe::option('publishable_key'))
-                ->amount(1000)
-                ->customAmount()
-                ->params([ 
-                    'resourceId'=> 96,
-                ]),
+            $this->merge(function() use ($request) {
+                return $this->maturities($request)->map(function($maturity) {
+                    return StripeCheckout::make($maturity->title())
+                                ->endpoint(route('stripe.checkout', Maturity::uriKey()))
+                                ->key(Stripe::option('publishable_key'))
+                                ->currency('usd')
+                                ->amount($maturity->contract->amount)
+                                ->customAmount()
+                                ->params([ 
+                                    'resourceId'=> $maturity->id,
+                                ]);
+                })->all();  
+            }),
         ];
+    }
+
+    public function maturities($request)
+    {
+        return Maturity::newModel()
+                    ->limit(2)
+                    ->latest()
+                    ->authenticate()
+                    ->with('contract')
+                    ->whereHas('contract')
+                    ->whereNull('tracking_code')
+                    ->get()
+                    ->mapInto(Maturity::class);
     }
 
     /**

@@ -70,7 +70,7 @@ class StrandprofileServiceProvider extends ServiceProvider
             ->navigations([
                 Navigations\Tenancy::class,
                 Navigations\PreviousTenancy::class,
-                Navigations\Maturity::class,
+                // Navigations\Maturity::class,
                 Navigations\Payments::class, 
                 Navigations\Apartment::class,
                 Navigations\PreviousApartments::class,
@@ -92,7 +92,7 @@ class StrandprofileServiceProvider extends ServiceProvider
         Route::any('/user/{user}/maturity/{maturity}/verify', [
             'uses'  => Http\Controllers\StripeVerifyController::class.'@handle',
             'as'    => 'stripe.verify',
-        ]); 
+        ]);  
 
         Route::middleware(['nova'])->post('/nova-api/{resource}/checkout', [
             'uses'  => Http\Controllers\StripeCheckoutController::class.'@handle',
