@@ -88,18 +88,11 @@ class StrandprofileServiceProvider extends ServiceProvider
     } 
 
     public function routes()
-    {
-        Route::prefix('stripe')->group(function($router) { 
-
-            // $router->get('verify', [
-            //     'uses'  => Http\Controllers\StripeCheckoutController::class.'@handle',
-            //     'as'    => 'stripe.verify',
-            // ]);
-            $router->any('verify', function() {
-                file_put_contents(__DIR__.'/res.json', json_encode(request()->all()));
-                dd(request()->all());
-            })->name('stripe.verify');
-        });
+    {  
+        Route::any('/user/{user}/maturity/{maturity}/verify', [
+            'uses'  => Http\Controllers\StripeVerifyController::class.'@handle',
+            'as'    => 'stripe.verify',
+        ]); 
 
         Route::middleware(['nova'])->post('/nova-api/{resource}/checkout', [
             'uses'  => Http\Controllers\StripeCheckoutController::class.'@handle',

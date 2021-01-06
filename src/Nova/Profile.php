@@ -46,7 +46,7 @@ class Profile extends User
                 ->amount(1000)
                 ->customAmount()
                 ->params([ 
-                    'resourceId'=> 1,
+                    'resourceId'=> 96,
                 ]),
         ];
     }
