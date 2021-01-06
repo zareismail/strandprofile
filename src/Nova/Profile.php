@@ -5,6 +5,8 @@ namespace Zareismail\Strandprofile\Nova;
 use Illuminate\Http\Request;  
 use Laravel\Nova\Fields\{ID, Text, Number, Avatar};
 use Zareismail\NovaContracts\Nova\User;
+use Zareismail\StripeCheckout\StripeCheckout;
+use Zareismail\Bonchaq\Nova\Maturity;
 
 class Profile extends User
 {    
@@ -37,6 +39,15 @@ class Profile extends User
             Avatar::make(__('Image'), 'profile->image')
                 ->rounded()
                 ->hideFromDetail(boolval($request->get('card') == 'profile')),
+
+            StripeCheckout::make(__('Make Payment'))
+                ->endpoint(route('stripe.checkout', Maturity::uriKey()))
+                ->key(Stripe::option('publishable_key'))
+                ->amount(1000)
+                ->customAmount()
+                ->params([ 
+                    'resourceId'=> 1,
+                ]),
         ];
     }
 

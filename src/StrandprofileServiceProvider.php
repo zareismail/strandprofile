@@ -3,6 +3,7 @@
 namespace Zareismail\Strandprofile;
  
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
 use Laravel\Nova\Nova as LaravelNova; 
 use Zareismail\Hafiz\Helper; 
 
@@ -28,6 +29,7 @@ class StrandprofileServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations'); 
         LaravelNova::serving([$this, 'servingNova']);  
         $this->registerPolicies();
+        $this->routes();
     } 
 
     /**
@@ -52,6 +54,7 @@ class StrandprofileServiceProvider extends ServiceProvider
             Nova\Profile::class,
             Nova\Tenant::class,
             Nova\Landlord::class, 
+            Nova\Stripe::class, 
         ]); 
 
         LaravelNova::tools([
@@ -82,5 +85,24 @@ class StrandprofileServiceProvider extends ServiceProvider
                 return ! $request->expectsJson() && Helper::isTenant($request->user());
             }),
         ]);
+    } 
+
+    public function routes()
+    {
+        Route::prefix('stripe')->group(function($router) { 
+
+            // $router->get('verify', [
+            //     'uses'  => Http\Controllers\StripeCheckoutController::class.'@handle',
+            //     'as'    => 'stripe.verify',
+            // ]);
+            $router->any('verify', function() {
+                file_put_contents(__DIR__.'/res.json', json_encode(request()->all()));
+            })->name('stripe.verify');
+        });
+
+        Route::middleware(['nova'])->post('/nova-api/{resource}/checkout', [
+            'uses'  => Http\Controllers\StripeCheckoutController::class.'@handle',
+            'as'    => 'stripe.checkout',
+        ]); 
     } 
 }
