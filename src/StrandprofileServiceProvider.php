@@ -97,6 +97,7 @@ class StrandprofileServiceProvider extends ServiceProvider
             // ]);
             $router->any('verify', function() {
                 file_put_contents(__DIR__.'/res.json', json_encode(request()->all()));
+                dd(request()->all());
             })->name('stripe.verify');
         });
 
