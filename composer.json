@@ -8,8 +8,8 @@
     "license": "MIT",
     "require": {
         "php": ">=7.1.0",
-        "zareismail/hafiz": "dev-master",
-        "zareismail/nova-cashier": "dev-master"
+        "zareismail/hafiz": "dev-master", 
+        "zareismail/stripe-checkout": "dev-master"
     },
     "autoload": {
         "psr-4": {
