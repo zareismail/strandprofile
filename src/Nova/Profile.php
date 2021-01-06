@@ -69,6 +69,7 @@ class Profile extends User
                     ->limit(2)
                     ->latest()
                     ->authenticate()
+                    ->orderBy('installment')
                     ->with('contract')
                     ->whereHas('contract')
                     ->whereNull('tracking_code')
