@@ -78,6 +78,7 @@ class StrandprofileServiceProvider extends ServiceProvider
                 Navigations\Issues::class,
                 Navigations\SendToOwner::class,
                 Navigations\Letters::class,
+                Navigations\Notifications::class,
                 Navigations\ReportEnvironmental::class,
                 Navigations\EnvironmentalReports::class,
             ])
