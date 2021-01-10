@@ -29,7 +29,7 @@ class StrandprofileServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations'); 
         LaravelNova::serving([$this, 'servingNova']);  
         $this->registerPolicies();
-        $this->routes();
+        $this->routes(); 
     } 
 
     /**
@@ -48,6 +48,8 @@ class StrandprofileServiceProvider extends ServiceProvider
      */
     public function servingNova()
     {
+        \Config::set('whisper.resource.users', \Zareismail\NovaContracts\Nova\User::class);
+
         LaravelNova::resources([
             Nova\Account::class,
             Nova\Insurance::class, 
