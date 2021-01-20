@@ -21,30 +21,7 @@ class Account extends Resource
      *
      * @var string
      */
-    public static $model = \Zareismail\Strandprofile\Models\StrandprofileAccount::class;
-
-    /**
-     * The single value that should be used to represent the resource when being displayed.
-     *
-     * @var string
-     */
-    public static $title = 'label';
-
-    /**
-     * The relationships that should be eager loaded when performing an index query.
-     *
-     * @var array
-     */
-    public static $with = ['auth']; 
-
-    /**
-     * The columns that should be searched.
-     *
-     * @var array
-     */
-    public static $search = [
-        'id', 'label'
-    ];
+    public static $model = \Zareismail\Strandprofile\Models\StrandprofileAccount::class; 
 
     /**
      * Get the fields displayed by the resource.

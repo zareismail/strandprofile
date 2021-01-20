@@ -27,7 +27,7 @@ abstract class Resource extends BaseResource
      *
      * @var array
      */
-    public static $with = ['details'];
+    public static $with = ['details', 'auth'];
 
     /**
      * The columns that should be searched.
