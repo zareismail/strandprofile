@@ -28,6 +28,7 @@ class StrandprofileServiceProvider extends ServiceProvider
     {   
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations'); 
         LaravelNova::serving([$this, 'servingNova']);  
+        $this->registerNovaRedirector();
         $this->registerPolicies();
         $this->routes(); 
     } 
@@ -40,6 +41,12 @@ class StrandprofileServiceProvider extends ServiceProvider
     public function register()
     {
     } 
+
+    public function registerNovaRedirector()
+    {
+        $this->app->make(\Illuminate\Contracts\Http\Kernel::class)
+                    ->pushMiddleware(Http\Middleware\RedirectToNova::class);
+    }
 
     /**
      * Register any Nova services.
