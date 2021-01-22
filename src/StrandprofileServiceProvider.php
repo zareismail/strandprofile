@@ -80,7 +80,7 @@ class StrandprofileServiceProvider extends ServiceProvider
                 Navigations\PreviousApartments::class,
                 Navigations\ReportProblem::class,
                 Navigations\Issues::class,
-                Navigations\SendToOwner::class,
+                Navigations\SendToLandlord::class,
                 Navigations\Letters::class,
                 Navigations\Notifications::class,
                 Navigations\ReportEnvironmental::class,

@@ -2,10 +2,10 @@
 
 namespace Zareismail\Strandprofile\Navigations; 
 
-use Zareismail\Hafiz\Nova\HafizApartment;
+use Zareismail\Hafiz\Models\HafizApartment;
 use Zareismail\Strandprofile\Nova\Landlord;
 
-class SendToOwner extends Letters 
+class SendToLandlord extends Letters 
 {      
     /**
      * Get the router name.
