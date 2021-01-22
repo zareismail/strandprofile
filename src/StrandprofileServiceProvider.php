@@ -54,6 +54,8 @@ class StrandprofileServiceProvider extends ServiceProvider
             Nova\Account::class,
             Nova\Insurance::class, 
             Nova\Profile::class,
+            Nova\Verification::class,
+            Nova\PersonalDetail::class,
             Nova\Tenant::class,
             Nova\Landlord::class, 
             Nova\Stripe::class, 

@@ -8,6 +8,7 @@
     "license": "MIT",
     "require": {
         "php": ">=7.1.0",
+        "dillingham/nova-button": "1.*",
         "zareismail/hafiz": "dev-master", 
         "zareismail/whisper": "dev-master",
         "zareismail/stripe-checkout": "dev-master"
