@@ -61,8 +61,10 @@ class Landlord extends User
      */
     public static function indexQuery(NovaRequest $request, $query)
     {
-        return $query->whereHas('roles', function($query) {
-            return $query->whereKey(intval(Registration::option('landlord_role')));
+        return $query->when($request->isMethod('get'), function($query) {
+            $query->whereHas('roles', function($query) {
+                return $query->whereKey(intval(Registration::option('landlord_role')));
+            });
         });
     }
 
