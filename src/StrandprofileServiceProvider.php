@@ -72,8 +72,8 @@ class StrandprofileServiceProvider extends ServiceProvider
             ->navigations([
                 Navigations\Tenancy::class,
                 Navigations\PreviousTenancy::class,
-                // Navigations\Maturity::class,
                 Navigations\Payments::class, 
+                Navigations\Maturity::class,
                 Navigations\Apartment::class,
                 Navigations\PreviousApartments::class,
                 Navigations\ReportProblem::class,

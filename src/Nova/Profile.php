@@ -4,9 +4,8 @@ namespace Zareismail\Strandprofile\Nova;
 
 use Illuminate\Http\Request;  
 use Laravel\Nova\Fields\{ID, Text, Number, Avatar};
+use Laravel\Nova\Panel;
 use Zareismail\NovaContracts\Nova\User;
-use Zareismail\StripeCheckout\StripeCheckout;
-use Zareismail\Bonchaq\Nova\Maturity;
 
 class Profile extends User
 {    
@@ -45,36 +44,8 @@ class Profile extends User
 
             Avatar::make(__('Image'), 'profile->image')
                 ->rounded()
-                ->hideFromDetail(boolval($request->get('card') == 'profile')),
-
-            $this->merge(function() use ($request) {
-                return $this->maturities($request)->map(function($maturity) {
-                    return StripeCheckout::make($maturity->title())
-                                ->endpoint(route('stripe.checkout', Maturity::uriKey()))
-                                ->key(Stripe::option('publishable_key'))
-                                ->currency('usd')
-                                ->amount($maturity->contract->amount)
-                                ->customAmount()
-                                ->params([ 
-                                    'resourceId'=> $maturity->id,
-                                ]);
-                })->all();  
-            }),
+                ->hideFromDetail(boolval($request->get('card') == 'profile')), 
         ];
-    }
-
-    public function maturities($request)
-    {
-        return Maturity::newModel()
-                    ->limit(2)
-                    ->latest()
-                    ->authenticate()
-                    ->orderBy('installment')
-                    ->with('contract')
-                    ->whereHas('contract')
-                    ->whereNull('tracking_code')
-                    ->get()
-                    ->mapInto(Maturity::class);
     }
 
     /**
