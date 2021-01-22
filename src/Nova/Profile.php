@@ -46,11 +46,12 @@ class Profile extends User
 
             Avatar::make(__('Image'), 'profile->image')
                 ->rounded()
-                ->hideFromDetail(boolval($request->get('card') == 'profile')),   
+                ->hideFromDetail($this->isProfileRequest($request)),   
             
             Button::make('Personal Details')    
                 ->edit(PersonalDetail::class, $request->user()->id)
                 ->style('primary-outline')
+                ->hideFromDetail(! $this->isProfileRequest($request))
                 ->withMeta([
                     'withoutLabel' => true,
                     'width' => 'w-1/3',
@@ -59,6 +60,7 @@ class Profile extends User
             Button::make('ID Verification')    
                 ->edit(Verification::class, $request->user()->id)
                 ->style('primary-outline')
+                ->hideFromDetail(! $this->isProfileRequest($request))
                 ->withMeta([
                     'withoutLabel' => true,
                     'width' => 'w-1/3',
@@ -67,11 +69,17 @@ class Profile extends User
             Button::make('References')    
                 ->edit(PersonalDetail::class, $request->user()->id)
                 ->style('primary-outline')
+                ->hideFromDetail(! $this->isProfileRequest($request))
                 ->withMeta([
                     'withoutLabel' => true,
                     'width' => 'w-1/3',
                 ]),
         ];
+    }
+
+    public function isProfileRequest($request)
+    {
+        return boolval($request->get('card') == 'profile');
     }
 
     /**
