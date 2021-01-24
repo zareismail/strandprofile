@@ -7,14 +7,7 @@ use Zareismail\NovaContracts\Nova\Resource as BaseResource;
 use Zareismail\NovaPolicy\Helper;
 
 abstract class Resource extends BaseResource
-{ 
-    /**
-     * The logical group associated with the resource.
-     *
-     * @var string
-     */
-    public static $group = 'Strandprofile'; 
-
+{   
     /**
      * The single value that should be used to represent the resource when being displayed.
      *

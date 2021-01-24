@@ -60,6 +60,7 @@ class StrandprofileServiceProvider extends ServiceProvider
         LaravelNova::resources([
             Nova\Account::class,
             Nova\Insurance::class, 
+            Nova\Reference::class, 
             Nova\Profile::class,
             Nova\Verification::class,
             Nova\PersonalDetail::class,
