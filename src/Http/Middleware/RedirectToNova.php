@@ -39,7 +39,7 @@ class RedirectToNova extends ServeNova
     public function exceptedPaths()
     {
         return [
-            'user'
+            'user', 'references'
         ];
     }
 }

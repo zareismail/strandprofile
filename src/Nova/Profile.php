@@ -42,7 +42,8 @@ class Profile extends User
 
             Text::make(__('Mobile'), 'mobile'),
 
-            Text::make(__('Email'), 'email'),
+            Text::make(__('Email'), 'email')
+                ->rules('email'),
 
             Avatar::make(__('Image'), 'profile->image')
                 ->rounded()
@@ -67,7 +68,7 @@ class Profile extends User
                 ]),
             
             Button::make('References')    
-                ->edit(PersonalDetail::class, $request->user()->id)
+                ->create(Reference::class)
                 ->style('primary-outline')
                 ->hideFromDetail(! $this->isProfileRequest($request))
                 ->withMeta([

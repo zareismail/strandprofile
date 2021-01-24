@@ -52,7 +52,7 @@ class Reference extends Resource
             Text::make(__('Landlord Email'), 'email')
                 ->sortable()
                 ->required()
-                ->rules('required'),
+                ->rules('required', 'email'),
 
             Text::make(__('Apartment Address'), 'address')
                 ->sortable()

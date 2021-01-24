@@ -17,10 +17,12 @@ class CreateStrandprofileReferencesTable extends Migration
             $table->id();
             $table->string('landlord');
             $table->string('email');
+            $table->string('hash');
             $table->text('address')->nullable();
             $table->integer('apartment');
             $table->datetime('tenancy_date');
             $table->auth();  
+            $table->details();  
             $table->timestamps();
             $table->softDeletes();
         });

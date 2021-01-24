@@ -26,6 +26,7 @@ class StrandprofileServiceProvider extends ServiceProvider
      */
     public function boot()
     {   
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'references'); 
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations'); 
         LaravelNova::serving([$this, 'servingNova']);  
         $this->registerNovaRedirector();
@@ -82,6 +83,7 @@ class StrandprofileServiceProvider extends ServiceProvider
             ->navigations([
                 Navigations\Tenancy::class,
                 Navigations\PreviousTenancy::class,
+                Navigations\References::class,
                 Navigations\Payments::class, 
                 Navigations\Maturity::class,
                 Navigations\Apartment::class,
@@ -105,6 +107,13 @@ class StrandprofileServiceProvider extends ServiceProvider
         Route::any('/user/{user}/maturity/{maturity}/verify', [
             'uses'  => Http\Controllers\StripeVerifyController::class.'@handle',
             'as'    => 'stripe.verify',
+        ]);  
+
+        Route::view('/references/{reference}', 'references::form');  
+
+        Route::post('/references/{reference}', [
+            'uses'  => Http\Controllers\ReferenceUpdateController::class.'@handle',
+            'as'    => 'reference.update',
         ]);  
 
         Route::middleware(['nova'])->post('/nova-api/{resource}/checkout', [
