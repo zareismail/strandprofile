@@ -40,7 +40,7 @@ class StrandprofileReference extends AuthorizableModel
 
         static::saved(function($model) {
             if(! $model->getDetails('filled')) {
-                \Mail::to($model->auth)->send(new ReferenceRequested($model)); 
+                \Mail::to($model->email)->send(new ReferenceRequested($model)); 
             }
         });
     }
