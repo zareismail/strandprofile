@@ -4,6 +4,7 @@ namespace Zareismail\Strandprofile\Nova;
 
 use Illuminate\Http\Request; 
 use Laravel\Nova\Panel;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\{ID, Text, Number, Boolean, Date};
 use DmitryBubyakin\NovaMedialibraryField\Fields\Medialibrary;
 use Zareismail\NovaContracts\Nova\User;
@@ -128,5 +129,22 @@ class Reference extends Resource
     public static function createButtonLabel()
     {
         return __('Request :resource', ['resource' => static::singularLabel()]);
+    }
+    /**
+     * Build an "index" query for the given resource.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        $callback = function($query) use ($request) { 
+            $query->orWhereHas('auth', function($query) use ($request) {
+                $query->whereKey($request->user()->contracts()->get()->pluck('auth_id')->all()); 
+            });   
+        };
+        
+        return parent::indexQuery($request, $query)->when(static::shouldAuthenticate($request), $callback);
     }
 }

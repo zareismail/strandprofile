@@ -17,6 +17,7 @@ class StrandprofileServiceProvider extends ServiceProvider
     protected $policies = [
         Models\StrandprofileAccount::class => Policies\Account::class, 
         Models\StrandprofileInsurance::class => Policies\Insurance::class, 
+        Models\StrandprofileReference::class => Policies\Reference::class, 
     ];
 
     /**
