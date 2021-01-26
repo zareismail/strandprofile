@@ -12,7 +12,9 @@
   </head>
   <body class="bg-light" data-new-gr-c-s-check-loaded="14.992.0" data-gr-ext-installed=""> 
     @php
-      $reference = \Zareismail\Strandprofile\Models\StrandprofileReference::whereHash(request()->route('reference'))->firstOrFail(); 
+      $reference = \Zareismail\Strandprofile\Models\StrandprofileReference::whereHash(
+        request()->route('reference'),
+      )->firstOrFail(); 
     @endphp
     <div class="container"> 
       <div class="py-5 text-center">
@@ -20,6 +22,8 @@
         <h3>Thanks for the `Reference Form!` filling</h3>
         <p class="lead">Here you can fill the reference form for the tenant `{{ $reference->auth->name }}`</p>
       </div>
+
+      @unless(boolval($reference->getDetails('filled')))
 
       <form class="needs-validation was-validated" method="post">
         <div class="row">  
@@ -122,8 +126,12 @@
         </div> 
 
         <hr class="mb-4">
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Send</button>
       </form>
+
+      @else
+        <h1 class="text-danger">Thanks for your cooperation; But this form has been filled earlier.</h1>
+      @endif
 
       <footer class="my-5 pt-5 text-muted text-center text-small">
         <p class="mb-1">© 2021-2022 {{ config('app.name') }}</p> 
