@@ -114,7 +114,7 @@ class Reference extends Resource
                     ->onlyOnDetail(),
 
                 $this->when(! $this->getDetails('deposit'), function() {
-                    return Text::make(__('Deposit holding reason'), 'details->deposit_comment');
+                    return Text::make(__('Deposit holding reason'), 'details->deposit_comment')->onlyOnDetail();
                 }),
             ]),
         ];
