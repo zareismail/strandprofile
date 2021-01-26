@@ -19,7 +19,8 @@ class StrandprofileReference extends AuthorizableModel
      * @var array
      */
     protected $casts = [
-        'tenancy_date' => 'datetime',
+        'started_at' => 'datetime',
+        'finished_in' => 'datetime',
     ]; 
     /**
      * Bootstrap the model and its traits.

@@ -67,7 +67,7 @@
           </div> 
 
           <div class="col-md-12 mb-3">
-            <label for="score">Give a score to {{ $reference->auth->name }} for her\his tenancy</label>
+            <label for="score">Give a score to {{ $reference->auth->name }} for her\his tenancy (0-5)</label>
             <input type="number" min="0" max="5" class="form-control" id="score" placeholder="Tenancy Rate" value="{{ old('score', 5) }}" name="score">
             <div class="invalid-feedback">
               Valid score is required.
