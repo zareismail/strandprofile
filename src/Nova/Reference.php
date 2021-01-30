@@ -53,13 +53,12 @@ class Reference extends Resource
 
             Boolean::make(__('Answered'), function() {
                 return $this->getDetails('filled');
-            })->onlyOnIndex(),
+            }),
 
             Text::make(__('Landlord Email'), 'email')
                 ->sortable()
                 ->required()
-                ->rules('required', 'email')
-                ->onlyOnDetail(),
+                ->rules('required', 'email'),
 
             Text::make(__('Apartment Address'), 'address')
                 ->sortable()
