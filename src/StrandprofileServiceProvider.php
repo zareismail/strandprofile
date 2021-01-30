@@ -3,6 +3,7 @@
 namespace Zareismail\Strandprofile;
  
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Route;
 use Laravel\Nova\Nova as LaravelNova; 
 use Zareismail\Hafiz\Helper; 
@@ -42,6 +43,9 @@ class StrandprofileServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        Relation::morphMap([
+            \Zareismail\NovaContracts\Models\User::class => \Zareismail\Strandprofile\Models\User::class
+        ]);
     } 
 
     public function registerNovaRedirector()
