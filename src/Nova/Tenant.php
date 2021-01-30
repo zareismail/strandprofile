@@ -2,6 +2,7 @@
 
 namespace Zareismail\Strandprofile\Nova; 
 
+use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest; 
 use Zareismail\Hafiz\Nova\Registration;
 use Zareismail\Hafiz\Helper;
@@ -48,5 +49,28 @@ class Tenant extends User
         return $query->whereHas('roles', function($query) {
             return $query->whereKey(intval(Registration::option('tenant_role')));
         });
+    }
+    
+    /**
+     * Determine if the resource should be available for the given request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    public function authorizeToViewAny(Request $request)
+    {
+        return true;
+    }
+
+
+    /**
+     * Determine if the resource should be available for the given request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    public static function authorizedToViewAny(Request $request)
+    {
+        return true;
     }
 }
