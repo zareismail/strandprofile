@@ -16,6 +16,8 @@ class StrandprofileServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
+        Models\Tenant::class => Policies\Tenant::class, 
+        Models\Landlord::class => Policies\Landlord::class, 
         Models\StrandprofileAccount::class => Policies\Account::class, 
         Models\StrandprofileInsurance::class => Policies\Insurance::class, 
         Models\StrandprofileReference::class => Policies\Reference::class, 
@@ -45,8 +47,25 @@ class StrandprofileServiceProvider extends ServiceProvider
     public function register()
     {
         Relation::morphMap([
-            \Zareismail\NovaContracts\Models\User::class => \Zareismail\Strandprofile\Models\User::class
+            \Zareismail\NovaContracts\Models\User::class => Models\User::class,
+            \Zareismail\NovaContracts\Models\User::class => Models\Tenant::class,
+            \Zareismail\NovaContracts\Models\User::class => Models\Landlord::class,
         ]);
+
+        \Event::listen(\NovaButton\Events\ButtonClick::class, function($event) {
+            if($event->key === 'request-identity-verification') {
+                $event->resource->notify(new Notifications\IdentityVerification($event->resource));
+                
+
+                \Storage::disk('public')->delete(data_get($event->resource, 'profile.passport'));
+                \Storage::disk('public')->delete(data_get($event->resource, 'profile.payslip'));
+
+                $event->resource->forceFill([
+                    'profile->passport' => null,
+                    'profile->payslip'  => null,
+                ])->save();
+            } 
+        });
     } 
 
     public function registerNovaRedirector()
