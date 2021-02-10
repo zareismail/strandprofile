@@ -23,7 +23,7 @@ class Verification extends Profile
     public function fields(Request $request)
     {
         return [    
-            Avatar::make(__('Passprot/ID'), 'profile->passport')
+            Avatar::make(__('Passport/ID'), 'profile->passport')
                 ->rounded(),  
 
             Avatar::make(__('Pay slip'), 'profile->payslip')
