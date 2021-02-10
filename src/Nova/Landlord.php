@@ -10,7 +10,14 @@ use Zareismail\Hafiz\Nova\Registration;
 use Zareismail\Hafiz\Helper;
 
 class Landlord extends User
-{          
+{       
+    /**
+     * The model the resource corresponds to.
+     *
+     * @var string
+     */
+    public static $model = \Zareismail\Strandprofile\Models\Landlord::class;
+   
     /**
      * Get the fields displayed by the resource.
      *

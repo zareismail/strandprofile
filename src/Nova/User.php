@@ -8,13 +8,6 @@ use Zareismail\NovaContracts\Nova\User as Resource;
 class User extends Resource
 {       
     /**
-     * The model the resource corresponds to.
-     *
-     * @var string
-     */
-    public static $model = \Zareismail\Strandprofile\Models\User::class;
-
-    /**
      * The logical group associated with the resource.
      *
      * @var string

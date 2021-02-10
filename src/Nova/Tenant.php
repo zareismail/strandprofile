@@ -3,12 +3,49 @@
 namespace Zareismail\Strandprofile\Nova; 
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\HasMany; 
 use Laravel\Nova\Http\Requests\NovaRequest; 
 use Zareismail\Hafiz\Nova\Registration;
-use Zareismail\Hafiz\Helper;
+use Zareismail\Hafiz\Helper; 
+use NovaButton\Button;
 
 class Tenant extends User
 {         
+    /**
+     * The model the resource corresponds to.
+     *
+     * @var string
+     */
+    public static $model = \Zareismail\Strandprofile\Models\Tenant::class;
+
+    /**
+     * Get the fields displayed by the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function fields(Request $request)
+    {
+        $references = HasMany::make(__('References'), 'references', Reference::class);
+
+        if(! $request->isResourceDetailRequest()) {
+            return array_merge(parent::fields($request), [
+                Button::make(__('Request Identity Verification'), 'request-identity-verification') 
+                    ->style('primary-outline')
+                    ->onlyOnIndex(),
+
+                $references,
+            ]);
+        }
+
+        return array_merge(
+            parent::fields($request), 
+            (new Verification($this->resource))->fields($request),
+            (new PersonalDetail($this->resource))->fields($request),
+            [$references],
+        );
+    }
+
     /**
      * Return the location to redirect the user after update.
      *

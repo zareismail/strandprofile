@@ -9,4 +9,11 @@ use Zareismail\Chapar\Concerns\InteractsWithLetters;
 class User extends Model implements Recipient
 {
 	use InteractsWithLetters;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'users'; 
 }
