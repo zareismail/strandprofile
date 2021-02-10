@@ -24,6 +24,13 @@ class Account extends Resource
     public static $model = \Zareismail\Strandprofile\Models\StrandprofileAccount::class; 
 
     /**
+     * The relationships that should be eager loaded when performing an index query.
+     *
+     * @var array
+     */
+    public static $with = [];
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Illuminate\Http\Request  $request
