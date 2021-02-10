@@ -29,6 +29,7 @@ class StrandprofileServiceProvider extends ServiceProvider
     public function boot()
     {   
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'references'); 
+        $this->loadJsonTranslationsFrom(__DIR__.'/../resources/lang'); 
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations'); 
         LaravelNova::serving([$this, 'servingNova']);  
         $this->registerNovaRedirector();
