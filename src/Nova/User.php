@@ -12,7 +12,14 @@ class User extends Resource
      *
      * @var string
      */
-    public static $group = 'Users';    
+    public static $group = 'Users'; 
+
+    /**
+     * The model the resource corresponds to.
+     *
+     * @var string
+     */
+    public static $model = \Zareismail\Strandprofile\Models\User::class;   
 
     /**
      * Get the URI key for the resource.
@@ -22,5 +29,5 @@ class User extends Resource
     public static function uriKey()
     {
         return 'sp-'.parent::uriKey();
-    }
+    } 
 }

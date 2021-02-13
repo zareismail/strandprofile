@@ -16,7 +16,7 @@ class Tenant extends User
      *
      * @var string
      */
-    public static $model = \Zareismail\Strandprofile\Models\Tenant::class;
+    // public static $model = \Zareismail\Strandprofile\Models\Tenant::class;
 
     /**
      * Get the fields displayed by the resource.
@@ -96,7 +96,7 @@ class Tenant extends User
      */
     public function authorizeToViewAny(Request $request)
     {
-        return true;
+        return request()->user()->can('create', \Zareismail\Strandprofile\Models\Tenant::class);
     }
 
 
@@ -108,6 +108,27 @@ class Tenant extends User
      */
     public static function authorizedToViewAny(Request $request)
     {
-        return true;
+        return request()->user()->can('create', \Zareismail\Strandprofile\Models\Tenant::class);
+    } 
+
+    /**
+     * Determine if the given resource is authorizable.
+     *
+     * @return bool
+     */
+    public static function authorizable()
+    {
+        return request()->user()->cant('create', \Zareismail\Strandprofile\Models\Tenant::class);
+    }
+
+    /**
+     * Determine if this resource is available for navigation.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user()->can('create', \Zareismail\Strandprofile\Models\Tenant::class);
     }
 }

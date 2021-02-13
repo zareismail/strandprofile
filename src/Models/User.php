@@ -16,4 +16,14 @@ class User extends Model implements Recipient
      * @var string
      */
     protected $table = 'users'; 
+    
+	/**
+	 * Get the related references.
+	 * 
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOneOrMany
+	 */
+	public function references()
+	{
+		return $this->hasMany(StrandprofileReference::class, 'auth_id');
+	}
 }

@@ -16,7 +16,7 @@ class Landlord extends User
      *
      * @var string
      */
-    public static $model = \Zareismail\Strandprofile\Models\Landlord::class;
+    // public static $model = \Zareismail\Strandprofile\Models\Landlord::class;
    
     /**
      * Get the fields displayed by the resource.
@@ -110,5 +110,16 @@ class Landlord extends User
     public static function authorizedToViewAny(Request $request)
     {
         return true;
+    }
+
+    /**
+     * Determine if this resource is available for navigation.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    public static function availableForNavigation(Request $request)
+    {
+        return false;
     }
 }

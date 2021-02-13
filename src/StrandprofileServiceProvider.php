@@ -88,10 +88,15 @@ class StrandprofileServiceProvider extends ServiceProvider
             Nova\Profile::class,
             Nova\Verification::class,
             Nova\PersonalDetail::class,
-            Nova\Tenant::class,
             Nova\Landlord::class, 
             Nova\Stripe::class, 
         ]); 
+
+        if(request()->user()->can('create', Models\Tenant::class)) { 
+            LaravelNova::resources([
+                Nova\Tenant::class,
+            ]);
+        }
 
         LaravelNova::tools([
             \Zareismail\QuickTheme\QuickTheme::cards([
