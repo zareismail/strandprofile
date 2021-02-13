@@ -47,9 +47,7 @@ class StrandprofileServiceProvider extends ServiceProvider
     public function register()
     {
         Relation::morphMap([
-            \Zareismail\NovaContracts\Models\User::class => Models\User::class,
-            \Zareismail\NovaContracts\Models\User::class => Models\Tenant::class,
-            \Zareismail\NovaContracts\Models\User::class => Models\Landlord::class,
+            \Zareismail\NovaContracts\Models\User::class => Models\User::class, 
         ]);
 
         \Event::listen(\NovaButton\Events\ButtonClick::class, function($event) {
