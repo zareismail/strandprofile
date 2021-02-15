@@ -2,9 +2,11 @@
 
 namespace Zareismail\Strandprofile;
  
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Database\Eloquent\Builder; 
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Nova\Nova as LaravelNova; 
 use Zareismail\Hafiz\Helper; 
 
@@ -37,6 +39,7 @@ class StrandprofileServiceProvider extends ServiceProvider
         $this->registerNovaRedirector();
         $this->registerPolicies();
         $this->routes(); 
+        $this->handleUserCode();
     } 
 
     /**
@@ -64,7 +67,7 @@ class StrandprofileServiceProvider extends ServiceProvider
                 ])->save();
             } 
         });
-    } 
+    }  
 
     public function registerNovaRedirector()
     {
@@ -150,4 +153,40 @@ class StrandprofileServiceProvider extends ServiceProvider
             'as'    => 'stripe.checkout',
         ]); 
     } 
+
+    public function handleUserCode()
+    { 
+        Builder::macro('fullname', function() {
+            $model = $this->getModel();
+            
+            if($model instanceof Authenticatable) {
+                $fullname = trim($model->firstname.PHP_EOL.$model->lastname) ?: $model->name;
+                $userCode = data_get($model, 'profile.code');
+
+                return $fullname.($userCode ? PHP_EOL.$userCode : '');
+            }
+
+            unset(static::$macros['fullname']);
+
+            return $model->fullname();
+        });
+
+        $codeGenerateCallback = function($user) {
+            if(is_null(data_get($user, 'profile.code'))) {
+                $code = rand(99999, 999999);
+
+                while ($user::where('profile->code', $code)->exists())
+                    $code = time();
+
+                $user->forceFill([
+                    'profile' => array_merge((array) $user->profile, [
+                        'code' => $code,
+                    ])
+                ]);
+            }   
+        }; 
+
+        Models\User::saving($codeGenerateCallback);
+        \Zareismail\NovaContracts\Models\User::saving($codeGenerateCallback);
+    }
 }
