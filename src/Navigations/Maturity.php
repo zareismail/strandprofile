@@ -28,7 +28,7 @@ class Maturity extends Payments
         return static::maturities()->map(function($maturity) {
             return StripeCheckout::make($maturity->payment_date->format('Y M'))
                         ->endpoint(route('stripe.checkout', BonchaqMaturity::uriKey()))
-                        ->key(Stripe::option('publishable_key')) 
+                        ->key(Stripe::option('publishable_key') ?? time()) 
                         ->amount($maturity->contract->amount)
                         ->customAmount()
                         ->params([ 
