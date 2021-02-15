@@ -3,7 +3,7 @@
 namespace Zareismail\Strandprofile\Navigations; 
  
 use Zareismail\QuickTheme\Navigation;
-use Zareismail\Chapar\Nova\Letter;
+use Zareismail\Strandprofile\Nova\Letter;
 
 class Letters extends Navigation 
 {     
