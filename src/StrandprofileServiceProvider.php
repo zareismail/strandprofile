@@ -93,6 +93,7 @@ class StrandprofileServiceProvider extends ServiceProvider
             Nova\PersonalDetail::class,
             Nova\Landlord::class, 
             Nova\Letter::class, 
+            Nova\Issue::class, 
             Nova\Stripe::class, 
         ]); 
 
