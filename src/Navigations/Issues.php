@@ -3,6 +3,7 @@
 namespace Zareismail\Strandprofile\Navigations; 
  
 use Zareismail\QuickTheme\Navigation;
+use Zareismail\Strandprofile\Nova\Issue;
 
 class Issues extends Navigation 
 {     
@@ -34,7 +35,7 @@ class Issues extends Navigation
     public static function params(): array
     {
         return [
-            'resourceName' => 'maintenance-issues',
+            'resourceName' => Issue::uriKey(),
         ];
     }
 }
