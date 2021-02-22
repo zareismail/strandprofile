@@ -28,17 +28,13 @@ class Letter extends Resource
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public static function indexQuery(NovaRequest $request, $query)
-    {
-        return parent::indexQuery($request, $query)
-                ->when(static::shouldAuthenticate($request), function($query) use ($request) { 
-                    $request->user()->contracts->each(function($contract) use ($query) {
-                        $query->orWhere(function($query) use ($contract) {
-                            $query
-                                ->where('recipient_type', $contract->contractable_type)
-                                ->where('recipient_id', $contract->contractable_id);
-                        });
-                    }); 
-                });
+    { 
+        return $query->authenticate()->orWhere(function($query) use ($request) {
+            $user = $request->user();
+            
+            $query->where('recipient_type', $user->getMorphClass())
+                  ->where('recipient_id', $user->id);
+        });
     }
     
     /**
