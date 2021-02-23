@@ -25,4 +25,36 @@ class ReportEnvironmental extends EnvironmentalReports
     {
         return 'create';
     } 
+    /**
+     * Get the router name.
+     *
+     * @return string
+     */
+    public static function name()
+    {
+        return 'create';
+    } 
+
+    /**
+     * Get the router name.
+     *
+     * @return string
+     */
+    public static function query() : array
+    { 
+        $contracts = request()->user()->load('activeContracts.contractable')->contracts->filter(function($contract) {
+            return $contract->contractable_type === HafizApartment::class;
+        }); 
+        $percapita = PerCapita::newModel()->where('measurable_type', HafizApartment::class)->where('measurable_id', optional($contracts->pop())->contractable_id)->first();
+        
+        if(is_null($percapita)) {
+            return [];
+        }
+        
+        return [
+            'viaRelationship' => 'reports',
+            'viaResource' => PerCapita::uriKey(),
+            'viaResourceId' => optional($percapita)->id,
+        ];
+    }
 }
