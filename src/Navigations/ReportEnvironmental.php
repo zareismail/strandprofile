@@ -2,6 +2,7 @@
 
 namespace Zareismail\Strandprofile\Navigations; 
  
+use Zareismail\Shaghool\Nova\PerCapita;
 use Zareismail\QuickTheme\Navigation;
 
 class ReportEnvironmental extends EnvironmentalReports 
@@ -14,17 +15,8 @@ class ReportEnvironmental extends EnvironmentalReports
     public static function label()
     {
         return __('Record Environmental');
-    }
-
-    /**
-     * Get the router name.
-     *
-     * @return string
-     */
-    public static function name()
-    {
-        return 'create';
     } 
+
     /**
      * Get the router name.
      *
