@@ -5,6 +5,7 @@ namespace Zareismail\Strandprofile\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\HasMany; 
 use Laravel\Nova\Http\Requests\NovaRequest; 
+use Zareismail\Contracts\Helpers\Once;
 use Zareismail\Hafiz\Nova\Registration;
 use Zareismail\Hafiz\Helper; 
 use NovaButton\Button;
@@ -96,7 +97,7 @@ class Tenant extends User
      */
     public function authorizeToViewAny(Request $request)
     {
-        return request()->user()->can('create', \Zareismail\Strandprofile\Models\Tenant::class);
+        return static::authorizedToViewAny($request);
     }
 
 
@@ -108,7 +109,9 @@ class Tenant extends User
      */
     public static function authorizedToViewAny(Request $request)
     {
-        return request()->user()->can('create', \Zareismail\Strandprofile\Models\Tenant::class);
+        return Once::get(static::class.'.authorizedToViewAny', function() use ($request) {
+            return $request->user()->can('create', \Zareismail\Strandprofile\Models\Tenant::class);
+        });
     } 
 
     /**
@@ -118,7 +121,9 @@ class Tenant extends User
      */
     public static function authorizable()
     {
-        return request()->user()->cant('create', \Zareismail\Strandprofile\Models\Tenant::class);
+        return Once::get(static::class.'.authorizable', function() use ($request) {
+            return request()->user()->cant('create', \Zareismail\Strandprofile\Models\Tenant::class);
+        });
     }
 
     /**
@@ -129,6 +134,6 @@ class Tenant extends User
      */
     public static function availableForNavigation(Request $request)
     {
-        return $request->user()->can('create', \Zareismail\Strandprofile\Models\Tenant::class);
+        return static::authorizedToViewAny($request);
     }
 }
