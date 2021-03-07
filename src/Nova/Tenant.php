@@ -43,7 +43,7 @@ class Tenant extends User
             parent::fields($request), 
             (new Verification($this->resource))->fields($request),
             (new PersonalDetail($this->resource))->fields($request),
-            [$references],
+            [$references]
         );
     }
 
@@ -121,7 +121,7 @@ class Tenant extends User
      */
     public static function authorizable()
     {
-        return Once::get(static::class.'.authorizable', function() use ($request) {
+        return Once::get(static::class.'.authorizable', function() {
             return request()->user()->cant('create', \Zareismail\Strandprofile\Models\Tenant::class);
         });
     }
