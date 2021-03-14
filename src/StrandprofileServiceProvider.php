@@ -91,7 +91,7 @@ class StrandprofileServiceProvider extends ServiceProvider
             Nova\Profile::class,
             Nova\Verification::class,
             Nova\PersonalDetail::class,
-            Nova\Landlord::class, 
+            // Nova\Landlord::class, 
             Nova\Letter::class, 
             Nova\Issue::class, 
             Nova\Stripe::class, 
@@ -100,6 +100,12 @@ class StrandprofileServiceProvider extends ServiceProvider
         if(request()->user()->can('create', Models\Tenant::class)) { 
             LaravelNova::resources([
                 Nova\Tenant::class,
+            ]);
+        }
+
+        if(request()->user()->can('create', Models\Landlord::class) || Helper::isTenant(request()->user())) { 
+            LaravelNova::resources([
+                Nova\Landlord::class,
             ]);
         }
 
